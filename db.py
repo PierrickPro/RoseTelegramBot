@@ -18,10 +18,14 @@ def connect():
     return con
 
 
-def test():
+def get_wallets(username):
     con = connect()
     cur = con.cursor()
-    cur.execute("SELECT ADDRESS, NAME, OWNER_USERNAME FROM WALLET")
-    rows = cur.fetchall()
+    cur.execute("SELECT ADDRESS FROM WALLET WHERE OWNER_USERNAME = '%s'" % username)
+    rows = cur.fetchall()[0]
+
+    if rows is None:
+        return False
+
     con.close()
     return rows

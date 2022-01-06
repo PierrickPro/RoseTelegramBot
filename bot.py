@@ -1,9 +1,11 @@
 import logging
 import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import parsemode
 
-# Enables logging
 import db
+import oasis_scan_api
+import bech32
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -15,11 +17,9 @@ PORT = int(os.environ.get('PORT', '8443'))
 APP_NAME = os.environ['APP_NAME']
 
 
-# We define command handlers. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Sends a message when the command /start is issued."""
-    username = update.message.from_user.username
-    update.message.reply_text('Hi ' + username + ' !')
+    update.message.reply_text('Hi!')
 
 
 def help(update, context):
@@ -27,9 +27,25 @@ def help(update, context):
     update.message.reply_text('Help!')
 
 
-def echo(update, context):
-    """Echos the user message."""
-    update.message.reply_text(update.message.text)
+def add_wallet(update, context):
+    w = 'oasis1qrdx0n7lgheek24t24vejdks9uqmfldtmgdv7jzz'
+    a = bech32.bech32_decode(w)
+
+    if a[0] != 'oasis':
+        update.message.reply_text('Invalid Address')
+    else:
+        # insert in db
+
+    return
+
+
+def get_info(update, context):
+    username = update.message.from_user.username
+    addresses = db.get_wallets(username)
+
+    for address in addresses:
+        reply_message = oasis_scan_api.get_wallet_info(address)
+        update.message.reply_text(reply_message, parse_mode=parsemode.ParseMode.HTML)
 
 
 def error(update, context):
@@ -39,7 +55,6 @@ def error(update, context):
 
 def main():
     """Starts the bot."""
-
     updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
@@ -48,7 +63,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(CommandHandler("info", get_info))
 
     # log all errors
     dp.add_error_handler(error)
