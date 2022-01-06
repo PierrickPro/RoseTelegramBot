@@ -1,6 +1,14 @@
 # Rose Tracker Telegram Bot
 
 
+##Database
+
+create table
+```
+heroku pg:psql --app rose-telegram-bot < wallet.sql
+```
+
+
 ##Deployment on Heroku using Docker
 
 
