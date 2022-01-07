@@ -13,6 +13,6 @@ def get_wallet_info(address):
     # turn dictionary in message
     message = ''
     for k, i in data.items():
-        message += '%s = %s\n' % (k, i)
+        message += '{0} = {1}\n'.format(k, i)
 
     return message
