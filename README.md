@@ -6,22 +6,15 @@ I built a Telegram bot to track the details of your ROSE wallets.
 
 ## Deployment on Heroku using Docker
 
-## Database
-
-create table
-```
-heroku pg:psql --app rose-telegram-bot < wallet.sql
-```
-
-
-## Deployment on Heroku using Docker
-
-
-
-### Setup
+### Heroku Login
 ```
 heroku login
-docker ps # make sure docker is running
+```
+
+### Create Database
+
+```
+heroku pg:psql --app rose-telegram-bot < wallet.sql
 ```
 
 ### Default Deployment Commands
@@ -46,7 +39,7 @@ I wrote the commands in a shell script:
 ./deployment.sh
 ```
 
-### Get Logs
+### Monitor Logs
 ```
 heroku logs --app=rose-telegram-bot --tail
 ```
