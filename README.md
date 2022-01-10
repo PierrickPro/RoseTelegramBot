@@ -1,7 +1,7 @@
 # Rose Tracker Telegram Bot
 [Project Video Demo](https://www.youtube.com/watch?v=712Hy_p8APk)
 
-ROSEs is a cryptocurrency token on the Oasis Network blockchain.</br>
+ROSE is a cryptocurrency token on the [Oasis Network](https://oasisprotocol.org) blockchain.</br>
 I built a Telegram bot to track the details of your ROSE wallets.
 
 ## Deployment on Heroku using Docker
